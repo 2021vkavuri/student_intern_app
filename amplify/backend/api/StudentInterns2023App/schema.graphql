@@ -1,0 +1,45 @@
+type Route @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  prefroutesID: ID! @index(name: "byPrefRoutes")
+  route: String
+}
+
+type InputData @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  origin: String
+  destination: String
+  type: Type
+}
+
+type NameToCode @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  placeId: String!
+  code: String!
+}
+
+enum Type {
+  TEC
+  H
+  L
+  HSD
+  NAR
+  SHD
+  SLD
+}
+
+type PrefRoutes @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  origin: String!
+  route: [String!]
+  destination: String!
+  type: String
+  area: String
+  altitude: String
+  aircraft: String
+  direction: String
+  seq: Int!
+  DCNTR: String
+  ACNTR: String
+  Routes: [Route] @hasMany(indexName: "byPrefRoutes", fields: ["id"])
+}
+ 

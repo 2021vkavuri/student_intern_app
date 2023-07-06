@@ -1,24 +1,43 @@
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
+import { FormA, PrefRoutesCardCollection, RouteCardCollection } from './ui-components';
+import { useState } from 'react';
 
 function App() {
+  const [showFormA, setShowFormA] = useState(true);
+  const [showPrefRoutesCard, setShowPrefRoutesCard] = useState(false);
+  const [showRouteCardCollection, setShowRouteCardCollection] = useState(false);
+  var routeId;
+  function submitFormA() {
+    setShowFormA(false);
+    setShowPrefRoutesCard(true);
+  }
+
+  function displayRoute(id) {
+    setShowRouteCardCollection(true);
+    routeId = id;
+    console.log(routeId);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div className="App" style={{ display : showFormA === false && 'none' }}>
+        <FormA overrides={{
+          SubmitButton: { onClick: () => submitFormA() }
+        }}/>
+      </div>
+      <div className="App" style={{ display : showPrefRoutesCard === false && 'none' }}>
+        <PrefRoutesCardCollection overrideItems={({ item, index }) => ({
+          overrides: {
+            Button: { onClick: () =>  displayRoute(item.Routes) }
+          }
+        })}/>
+      </div>
+      <div className="App" style={{ display : showRouteCardCollection === false && 'none' }}>
+        <RouteCardCollection items={routeId}/>
+      </div>
+    </>
+    
+  
   );
 }
 
