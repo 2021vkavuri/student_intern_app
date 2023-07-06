@@ -1,0 +1,23 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-studentinterns2023ap-staging-163906-authRole",
+      "UnauthRoleArn": "arn:aws:iam::201318950389:role/amplify-studentinterns2023ap-staging-163906-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::201318950389:role/amplify-studentinterns2023ap-staging-163906-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-studentinterns2023ap-staging-163906-deployment",
+      "UnauthRoleName": "amplify-studentinterns2023ap-staging-163906-unauthRole",
+      "StackName": "amplify-studentinterns2023ap-staging-163906",
+      "StackId": "arn:aws:cloudformation:us-east-1:201318950389:stack/amplify-studentinterns2023ap-staging-163906/d0a2a440-0a08-11ee-a17e-0a41d6f113d5",
+      "AmplifyAppId": "d34668wlrs1l4c"
+    },
+    "categories": {
+      "auth": {
+        "StudentInterns2023App": {}
+      },
+      "storage": {
+        "s3studentinterns2023appstoragede58b0eb": {}
+      }
+    }
+  }
+}

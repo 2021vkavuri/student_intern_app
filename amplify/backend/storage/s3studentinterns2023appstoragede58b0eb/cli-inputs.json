@@ -1,0 +1,12 @@
+{
+  "resourceName": "s3studentinterns2023appstoragede58b0eb",
+  "bucketName": "student-interns-2023-app-storage-de58b0eb",
+  "policyUUID": "06295164",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "READ"
+  ]
+}
