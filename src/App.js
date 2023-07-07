@@ -11,9 +11,10 @@ function App() {
   const [showRouteCardCollection, setShowRouteCardCollection] = useState(false);
   var routeId;
   //console.log(DataStore.query(Route));
-  function submitFormA() {
+  function submitFormA(fields) {
     setShowFormA(false);
     setShowPrefRoutesCard(true);
+    console.log(fields);
   }
 
   function displayRoute(id) {
@@ -24,9 +25,9 @@ function App() {
   return (
     <>
       <div className="App" style={{ display : showFormA === false && 'none' }}>
-        <FormA overrides={{
-          SubmitButton: { onClick: () => submitFormA() }
-        }}/>
+        <FormA 
+          onSubmit={fields => { submitFormA(fields) }}
+        />
       </div>
       <div className="App" style={{ display : showPrefRoutesCard === false && 'none' }}>
         <PrefRoutesCardCollection overrideItems={({ item, index }) => ({
