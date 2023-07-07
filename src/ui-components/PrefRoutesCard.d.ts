@@ -5,7 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { PrefRoutes, Route } from "../models";
+import { PrefRoutes } from "../models";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 import { ButtonProps, FlexProps, TextProps } from "@aws-amplify/ui-react";
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
@@ -22,8 +22,6 @@ export declare type PrefRoutesCardOverridesProps = {
 } & EscapeHatchProps;
 export declare type PrefRoutesCardProps = React.PropsWithChildren<Partial<FlexProps> & {
     inputData?: PrefRoutes;
-    route?: Route;
-    routeDisplay?: React.ReactNode;
 } & {
     overrides?: PrefRoutesCardOverridesProps | undefined | null;
 }>;

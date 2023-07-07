@@ -9,24 +9,24 @@ import * as React from "react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { Button, Flex, Text } from "@aws-amplify/ui-react";
 export default function PrefRoutesCard(props) {
-  const { inputData, route, routeDisplay, overrides, ...rest } = props;
+  const { inputData, overrides, ...rest } = props;
   return (
     <Flex
       gap="24px"
       direction="column"
-      width="227px"
+      width="unset"
       height="unset"
-      justifyContent="flex-start"
+      justifyContent="center"
       alignItems="center"
       position="relative"
       border="1px SOLID rgba(0,0,0,1)"
-      padding="23px 23px 23px 23px"
+      padding="23px 0px 23px 0px"
       backgroundColor="rgba(255,255,255,1)"
       {...getOverrideProps(overrides, "PrefRoutesCard")}
       {...rest}
     >
       <Flex
-        gap="21px"
+        gap="18px"
         direction="row"
         width="unset"
         height="unset"
@@ -34,9 +34,8 @@ export default function PrefRoutesCard(props) {
         alignItems="flex-start"
         overflow="hidden"
         shrink="0"
-        alignSelf="stretch"
         position="relative"
-        padding="11px 91px 11px 91px"
+        padding="11px 21px 11px 21px"
         {...getOverrideProps(overrides, "OriginToDestination")}
       >
         <Text
@@ -125,7 +124,6 @@ export default function PrefRoutesCard(props) {
         alignItems="flex-start"
         overflow="hidden"
         shrink="0"
-        alignSelf="stretch"
         position="relative"
         padding="15px 11px 15px 11px"
         {...getOverrideProps(overrides, "Type")}

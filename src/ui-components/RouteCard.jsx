@@ -12,16 +12,16 @@ export default function RouteCard(props) {
   const { prefRoutes, route, overrides, ...rest } = props;
   return (
     <Flex
-      gap="10px"
+      gap="0"
       direction="column"
-      width="190px"
-      height="68px"
+      width="unset"
+      height="unset"
       justifyContent="center"
       alignItems="center"
       overflow="hidden"
       position="relative"
       border="1px SOLID rgba(0,0,0,1)"
-      padding="0px 0px 0px 0px"
+      padding="18px 45px 18px 45px"
       backgroundColor="rgba(255,255,255,1)"
       {...getOverrideProps(overrides, "RouteCard")}
       {...rest}
