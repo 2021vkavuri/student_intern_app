@@ -1,5 +1,4 @@
 //import logo from './logo.svg';
-import { DataStore } from 'aws-amplify';
 import './App.css';
 import { DataStore } from 'aws-amplify';
 import { FormA, PrefRoutesCardCollection, RouteCardCollection } from './ui-components';
