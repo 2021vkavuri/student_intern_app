@@ -1,7 +1,9 @@
 //import logo from './logo.svg';
 import './App.css';
+import { DataStore } from 'aws-amplify';
 import { FormA, PrefRoutesCardCollection, RouteCardCollection } from './ui-components';
 import { useState } from 'react';
+import { PrefRoutes, Route } from './models';
 
 function App() {
   const [showFormA, setShowFormA] = useState(true);
