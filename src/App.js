@@ -1,4 +1,5 @@
 //import logo from './logo.svg';
+import { DataStore } from 'aws-amplify';
 import './App.css';
 import { DataStore } from 'aws-amplify';
 import { FormA, PrefRoutesCardCollection, RouteCardCollection } from './ui-components';
@@ -10,6 +11,7 @@ function App() {
   const [showPrefRoutesCard, setShowPrefRoutesCard] = useState(false);
   const [showRouteCardCollection, setShowRouteCardCollection] = useState(false);
   var routeId;
+  //console.log(DataStore.query(Route));
   function submitFormA() {
     setShowFormA(false);
     setShowPrefRoutesCard(true);
@@ -31,7 +33,8 @@ function App() {
         <PrefRoutesCardCollection overrideItems={({ item, index }) => ({
           overrides: {
             Button: { onClick: () =>  displayRoute(item.Routes) }
-          }
+          },
+          
         })}/>
       </div>
       <div className="App" style={{ display : showRouteCardCollection === false && 'none' }}>

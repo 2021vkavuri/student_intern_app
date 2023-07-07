@@ -8,6 +8,7 @@
 import * as React from "react";
 import { PrefRoutes } from "../models";
 import {
+  createDataStorePredicate,
   getOverrideProps,
   useDataStoreBinding,
 } from "@aws-amplify/ui-react/internal";
@@ -15,10 +16,19 @@ import PrefRoutesCard from "./PrefRoutesCard";
 import { Collection } from "@aws-amplify/ui-react";
 export default function PrefRoutesCardCollection(props) {
   const { items: itemsProp, overrideItems, overrides, ...rest } = props;
+  const itemsFilterObj = {
+    and: [
+      { field: "origin", operator: "eq", operand: "ABE" },
+      { field: "destination", operator: "eq", operand: "FRG" },
+      { field: "type", operator: "eq", operand: "TEC" },
+    ],
+  };
+  const itemsFilter = createDataStorePredicate(itemsFilterObj);
   const [items, setItems] = React.useState(undefined);
   const itemsDataStore = useDataStoreBinding({
     type: "collection",
     model: PrefRoutes,
+    criteria: itemsFilter,
   }).items;
   React.useEffect(() => {
     if (itemsProp !== undefined) {
@@ -39,12 +49,13 @@ export default function PrefRoutesCardCollection(props) {
   return (
     <Collection
       type="grid"
+      isPaginated={true}
       searchPlaceholder="Search..."
       itemsPerPage={6}
-      templateRows="1fr 1fr"
-      autoFlow="column"
-      alignItems="stretch"
-      justifyContent="stretch"
+      templateColumns="1fr 1fr 1fr"
+      autoFlow="row"
+      alignItems="top"
+      justifyContent="left"
       items={items || []}
       {...getOverrideProps(overrides, "PrefRoutesCardCollection")}
       {...rest}
