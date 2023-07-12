@@ -86,7 +86,7 @@ export default function FormA(props) {
         if (validationResponses.some((r) => r.hasError)) {
           return;
         }
-        //await onSubmit(modelFields);
+        await onSubmit(modelFields);
       }}
       {...getOverrideProps(overrides, "FormA")}
       {...rest}
