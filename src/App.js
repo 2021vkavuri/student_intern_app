@@ -3,7 +3,7 @@ import { DataStore, SortDirection } from 'aws-amplify';
 import './App.css';
 import { FormA, PrefRoutesCardCollection, RouteCardCollection } from './ui-components';
 import { useState } from 'react';
-import { PrefRoutes, Route } from './models';
+import { PrefRoutes, Route, NameToCode } from './models';
 var routes;
 var prefroutes;
 
@@ -30,11 +30,19 @@ function App() {
   }
 
   async function displayPrefRoutes(fields) {
-    prefroutes = await DataStore.query(PrefRoutes, (c) => c.and(c => [c.origin.eq(fields.Field0), c.destination.eq(fields.Field1), c.type.eq(fields.Field2.toUpperCase())])  );
-    console.log(prefroutes);
+    var ori = await fetch("https://maps.googleapis.com/maps/api/geocode/json?address="+ fields.Field0.replace(" ", "+") +"&key=AIzaSyA8jXrbPQUV4atOUd_50C6aHxKVts1ssUA");
+    ori = await ori.json();
+    ori = await DataStore.query(NameToCode, (c) => c.placeId.eq(ori.results[0].place_id));
+    ori = ori[0].code;
+    
+    var dest = await fetch("https://maps.googleapis.com/maps/api/geocode/json?address="+ fields.Field1.replace(" ", "+") +"&key=AIzaSyA8jXrbPQUV4atOUd_50C6aHxKVts1ssUA");
+    dest = await dest.json();
+    dest = await DataStore.query(NameToCode, (c) => c.placeId.eq(dest.results[0].place_id));
+    dest = dest[0].code;
+
+    prefroutes = await DataStore.query(PrefRoutes, (c) => c.and(c => [c.origin.eq(ori), c.destination.eq(dest), c.type.eq(fields.Field2.toUpperCase())])  );
     setShowFormA(false);
     setShowPrefRoutesCard(true);
-    console.log(fields); 
   }
   return (
     <>
