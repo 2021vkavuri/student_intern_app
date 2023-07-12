@@ -68,6 +68,7 @@ export default function PrefRoutesCardCollection(props) {
           inputData={item}
           route={item}
           key={item.id}
+          //modifyFilters = {() => console.log(item.id)}
           {...(overrideItems && overrideItems({ item, index }))}
         ></PrefRoutesCard>
       )}
