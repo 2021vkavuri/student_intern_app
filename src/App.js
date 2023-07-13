@@ -1,7 +1,7 @@
 //import logo from './logo.svg';
 import { DataStore, SortDirection } from 'aws-amplify';
 import './App.css';
-import { FormA, PrefRoutesCardCollection, RouteCardCollection } from './ui-components';
+import { BackButton, FormA, PrefRoutesCardCollection, RouteCardCollection } from './ui-components';
 import { useState } from 'react';
 import { PrefRoutes, Route, NameToCode } from './models';
 var routes;
@@ -11,6 +11,7 @@ function App() {
   const [showFormA, setShowFormA] = useState(true);
   const [showPrefRoutesCard, setShowPrefRoutesCard] = useState(false);
   const [showRouteCardCollection, setShowRouteCardCollection] = useState(false);
+  const [showInvalidInput, setShowInvalidInput] = useState(false);
   
   
 
@@ -18,7 +19,6 @@ function App() {
     setShowRouteCardCollection(false);
     routes = await DataStore.query(Route, (c) => c.prefroutesID.eq(id), {sort: (s) => s.createdAt(SortDirection.ASCENDING)});
     setShowRouteCardCollection(true);
-    console.log(routes);
     /*var route = async() => {
                             let i = await DataStore.query(Route, (c) => c.prefroutesID.eq(id), {sort: (s) => s.createdAt(SortDirection.ASCENDING)});
                             console.log(i);
@@ -30,22 +30,39 @@ function App() {
   }
 
   async function displayPrefRoutes(fields) {
-    var ori = await fetch("https://maps.googleapis.com/maps/api/geocode/json?address="+ fields.Field0.replace(" ", "+") +"&key=AIzaSyA8jXrbPQUV4atOUd_50C6aHxKVts1ssUA");
-    ori = await ori.json();
-    ori = await DataStore.query(NameToCode, (c) => c.placeId.eq(ori.results[0].place_id));
-    ori = ori[0].code;
+    try {
+      var ori = await fetch("https://maps.googleapis.com/maps/api/geocode/json?address="+ fields.Field0.replace(" ", "+") +"&key=AIzaSyA8jXrbPQUV4atOUd_50C6aHxKVts1ssUA");
+      ori = await ori.json();
+      ori = await DataStore.query(NameToCode, (c) => c.placeId.eq(ori.results[0].place_id));
+      ori = ori[0].code;
     
-    var dest = await fetch("https://maps.googleapis.com/maps/api/geocode/json?address="+ fields.Field1.replace(" ", "+") +"&key=AIzaSyA8jXrbPQUV4atOUd_50C6aHxKVts1ssUA");
-    dest = await dest.json();
-    dest = await DataStore.query(NameToCode, (c) => c.placeId.eq(dest.results[0].place_id));
-    dest = dest[0].code;
-
+      var dest = await fetch("https://maps.googleapis.com/maps/api/geocode/json?address="+ fields.Field1.replace(" ", "+") +"&key=AIzaSyA8jXrbPQUV4atOUd_50C6aHxKVts1ssUA");
+      dest = await dest.json();
+      dest = await DataStore.query(NameToCode, (c) => c.placeId.eq(dest.results[0].place_id));
+      dest = dest[0].code;
+    } catch (error) {
+      setShowInvalidInput(true);
+      return;
+    }
     prefroutes = await DataStore.query(PrefRoutes, (c) => c.and(c => [c.origin.eq(ori), c.destination.eq(dest), c.type.eq(fields.Field2.toUpperCase())])  );
     setShowFormA(false);
     setShowPrefRoutesCard(true);
+    setShowInvalidInput(false);
   }
+
+  function goBack() {
+    setShowPrefRoutesCard(false);
+    setShowFormA(true);
+    setShowRouteCardCollection(false);
+    setShowInvalidInput(false);
+  }
+
   return (
     <>
+      <BackButton paddingTop={ 50 } paddingLeft={ 50 } onClick={() => goBack() } />
+      <div className="App" style={{ display : showInvalidInput === false && 'none' }}>
+        Please enter a valid input
+      </div>
       <div className="App" style={{ display : showFormA === false && 'none' }}>
         <FormA 
           onSubmit={fields => { displayPrefRoutes(fields) }}
@@ -55,9 +72,7 @@ function App() {
         <PrefRoutesCardCollection items={prefroutes} overrideItems={({ item, index }) => ({
           overrides: {
             Button: { onClick: () =>  {displayRoute(item.id)}}
-          },
-          
-        })} />
+          }})} />
       </div>
       <div className="App" style={{ display : showRouteCardCollection === false && 'none' }}>
         <RouteCardCollection items={routes}/>
