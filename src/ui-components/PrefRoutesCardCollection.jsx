@@ -41,8 +41,8 @@ export default function PrefRoutesCardCollection(props) {
       type="grid"
       searchPlaceholder="Search..."
       itemsPerPage={6}
-      templateRows="1fr 1fr"
-      autoFlow="column"
+      templateColumns="1fr 1fr 1fr"
+      autoFlow="row"
       alignItems="stretch"
       justifyContent="stretch"
       items={items || []}
